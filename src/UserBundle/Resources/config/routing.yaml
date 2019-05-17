@@ -1,0 +1,62 @@
+login:
+  path:     /login
+  defaults: { _controller: "UserBundle:Security:login" }
+  methods:  [GET, POST]
+
+logout:
+  path:     /logout
+
+app_index:
+  path:     /index
+  defaults: { _controller: "UserBundle:User:index" }
+  methods:  GET
+
+app_load_data:
+  path: /load
+  defaults: { _controller: "UserBundle:User:load" }
+  methods: GET
+
+app_add_data:
+  path: /add
+  defaults: { _controller: "UserBundle:User:add" }
+  methods: GET
+
+app_new:
+  path: /new
+  defaults: { _controller: "UserBundle:User:new" }
+  methods: [GET, POST]
+
+app_edit:
+  path: /edit/{id}
+  defaults: { _controller: "UserBundle:User:edit" }
+  methods: [GET, POST]
+
+app_delete:
+  path: /delete/{id}
+  defaults: { _controller: "UserBundle:User:destroy" }
+  methods: GET
+
+app_shopping:
+  path: /shopping
+  defaults: { _controller: "UserBundle:User:shopping" }
+  methods: GET
+
+app_cart:
+  path: /shopping/add
+  defaults: { _controller: "UserBundle:User:addCart" }
+  methods: POST
+
+app_view_cart:
+  path: /shopping/view
+  defaults: { _controller: "UserBundle:User:viewCart" }
+  methods: GET
+
+app_remove_cart:
+  path: /shopping/remove/{itemId}
+  defaults: { _controller: "UserBundle:User:removeCart" }
+  methods: GET
+
+app_update_quantity:
+  path: /shopping/quantity
+  defaults: { _controller: "UserBundle:User:updateQuantityCart" }
+  methods: POST

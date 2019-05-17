@@ -1,0 +1,41 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+    providers:
+        in_memory: { memory: ~ }
+        my_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            form_login:
+                login_path: login # chinh la name text login ben routing
+                check_path: login
+                provider: my_provider
+                default_target_path: app_load_data
+                #failure_path: app_index
+            logout:
+                path:   /routing/logout # để đúng path ko can tao function trong controller
+                target: /routing/login
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+#         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/routing/login, roles: IS_AUTHENTICATED_ANONYMOUSLY } # ai cung vao link nay dc
+         - { path: ^/routing/*, roles: ROLE_USER } #sau khi login moi vao dc (tuc la chua login hoac het session hoac copy link qua browser khac)

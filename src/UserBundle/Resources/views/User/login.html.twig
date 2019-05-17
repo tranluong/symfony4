@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+{% block title %} {{ parent() }} Login{% endblock %}
+
+{% block body %}
+Login form
+    {% if error %}
+        <div class="error">{{ error.message | replace({"Bad credentials." : "Invalid username or password."}) }}</div>
+    {% endif %}
+
+<form action="{{ path('login') }}" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+    <br/>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="_password" />
+
+    {#
+        If you want to control the URL the user
+        is redirected to on success (more details below)
+        <input type="hidden" name="_target_path" value="/account" />
+    #}
+<br/>
+    <button type="submit">login</button>
+</form>
+
+{% endblock %}

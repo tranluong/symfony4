@@ -1,0 +1,27 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+app_lucky_number:
+  path: /lucky/number
+  controller: App\Controller\LuckyController::number
+
+app_blog_list:
+  path: /blog/list
+  controller: App\Controller\BlogController::lists
+
+app_blog_show:
+  path: /blog/show/{name}
+  controller: App\Controller\BlogController::show
+
+app_user_bundle_number:
+  path: /user-bundle/number
+  controller: App\UserBundle\Controller\UserController::indexAction
+
+app_routing_in_user_bundle:
+    resource: "@UserBundle/Resources/config/routing.yaml"
+    #resource: "@AppBundle/Resources/config/routing.xml" #Routing bang file xml
+    prefix: /routing
+
+#logout:
+#    path: /logout

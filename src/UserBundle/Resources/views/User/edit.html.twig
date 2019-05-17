@@ -1,0 +1,14 @@
+{{ form_start(form, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'}}) }}
+<div>
+    Username: {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div>
+    Email: {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div>
+    Password: {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+</div>
+<input type="submit" class="btn" value="Update" />
+{{ form_end(form) }}
+
+<a href="{{ path('app_load_data') }}">Back</a>

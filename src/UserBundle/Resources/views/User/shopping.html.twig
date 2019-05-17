@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+{% block title %} {{ parent() }} Shopping{% endblock %}
+
+{% block body %}
+    <table>
+        <th>Name</th>
+        <th>Price</th>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>
+                    <form action="{{ path('app_cart') }}" method="POST">
+                        <input type="hidden" name="id" value="{{ product.id }}">
+                        <input type="hidden" name="name" value="{{ product.name }}">
+                        <input type="hidden" name="price" value="{{ product.price }}">
+                        <input type="submit" value="Add Cart" />
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            No record
+        {% endfor %}
+        </tbody>
+    </table>
+    <p><a href="{{ path('app_view_cart') }}">View Cart</a></p>
+    <p><a href="{{ path('app_load_data') }}">Back</a></p>
+{% endblock %}

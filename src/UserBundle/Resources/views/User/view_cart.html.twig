@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+{% block title %} {{ parent() }} Shopping{% endblock %}
+
+{% block body %}
+    Your cart:
+    <table>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Sub Total</th>
+        <tbody id="cart">
+        {% set sum = 0 %}
+        {% for cart in carts %}
+            <tr>
+                <td>{{ cart.nameProduct }}</td>
+                <td>{{ cart.priceProduct }}</td>
+                <td><input style="width: 25px;" class="qty" type="text" value="{{ cart.quantity }}" name="quantity" data-price="{{ cart.priceProduct }}"  data-id="{{ cart.idProduct }}"></td>
+                {% set sub = cart.priceProduct * cart.quantity %}
+                <td class="sub">{{ sub }}</td>
+                {% set sum = sum + sub %}
+                <td><a href="{{ path('app_remove_cart', {'itemId': cart.idProduct}) }}">Remove</a></td>
+            </tr>
+        {% else %}
+            No record
+        {% endfor %}
+        </tbody>
+    </table>
+    <div style="margin-top: 10px;">
+        <span style="font-weight: 700;">Total:</span> <span style="font-weight: 700;" id="total">{{ sum }}</span>
+    </div>
+    <div>
+        <a href="{{ path('app_shopping') }}">Back</a>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            {#var carts = {{ carts|json_encode|raw }}#}
+            {#var carts = {{ app.session.get('carts')|json_encode|raw }}#}
+            {#console.log(carts)#}
+
+            $('#cart .qty').blur(function(e) {
+               var price = $(this).data('price'),
+                   qty   = $(this).val(),
+                   subTotal   = parseInt(qty)*price,
+                   id    = $(this).data('id');
+
+                $(this).parent().siblings('td.sub').html(subTotal);
+//                carts[id]['quantity'] = qty;
+                {#{{ app.session.set('carts', carts) }}#}
+
+                //update quantity to session
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ path('app_update_quantity') }}",
+                    dataType: "json",
+                    data: {id: id, qty: qty},
+                    success: function(data) {
+                        console.log('Quantity updated');
+                    }
+                });
+
+                //Tinh tong
+                var sum = 0;
+                $('#cart .sub').each(function(){
+                    sum += parseInt($(this).text());
+                });
+                $('#total').html(sum);
+                console.log(sum)
+            });
+        });
+    </script>
+{% endblock %}

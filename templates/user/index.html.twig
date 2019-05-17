@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h2>Test for call global variable {{ testing_variable }}</h2>
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ 'src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
+    </ul>
+</div>
+<div>
+    {#{{ dump(users) }}#}
+    {{ parent() }} <br/>
+    This is a test for custom twig extension
+    {{ price_product|price(1, ',', '.') }} <br/>
+    This is a test for upper string (multi twig extension)
+    {{ upperString|upperText }}
+    <table>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.name|escape }}</td>
+            <td>{{ user.phone }}</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        {% else %}
+            <tr>No data</tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
